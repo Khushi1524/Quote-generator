@@ -5,31 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quote Generator</title>
+    <style>
+        
+    </style>
 </head>
 
 <body>
 
     <div class="quotebx">
-        <h2>Daily New Quotes Here</h2>
+        <h2>Daily New Quotes</h2>
         <blockquote id="quote">loading....</blockquote>
         <span id="author">loading....</span>
         <div>
-            <button>New Quote</button>
-            <button><img src="" alt="">Tweet</button>
+            <button onclick="getquote(api_url)">New Quote</button>
+            <button onclick="tweet()"><img src="" alt="">Tweet</button>
         </div>
     </div>
     <script>
-        const quote = document.getElementById('quote');
-        
         const api_url = "https://api.quotable.io/random";
 
         async function getquote(url) {
             const response = await fetch(url);
             var data = await response.json();
-            console.log(data);
+
+            const quote = document.getElementById('quote').innerHTML = data.content;
+            const author = document.getElementById('author').innerHTML = data.author;
         }
 
         getquote(api_url);
+
+        function tweet() {
+            window.open("https://twitter.com/intent/tweet?text=" + quote + "---- by" + author, "Tweet window", "width=600")
+        }
     </script>
 </body>
 
